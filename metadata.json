@@ -1,0 +1,38 @@
+{
+  "name": "danieldreier-factery",
+  "version": "0.1.0",
+  "author": "danieldreier",
+  "summary": "Fact overloading like you've never seen",
+  "license": "Apache-2.0",
+  "source": "https://github.com/danieldreier/puppet-factery",
+  "project_page": "https://github.com/danieldreier/puppet-factery",
+  "issues_url": "https://github.com/danieldreier/puppet-factery/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.0.0 <5.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "4.x"
+    }
+  ]
+
+}
