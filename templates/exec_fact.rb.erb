@@ -1,0 +1,44 @@
+## this fact was created by puppet using factery exec_facts
+## do not modify by hand; changes will be overwritten
+
+fact_name = '<%= @fact_name %>'
+command = '<%= @command %>'
+split = '<%= @split %>'
+<% if has_variable?( 'labels' ) -%>
+labels = ['<%= @labels.join("','") %>']
+<% else -%>
+labels = false
+<% end -%>
+break_lines = <%= @break_lines.to_s %>
+first_line = <%= @first_line %>
+first_line_as_labels = <%= @first_line_as_labels.to_s %>
+
+Facter.add(fact_name) do
+  output = Facter::Core::Execution.exec(command)
+  if break_lines
+    output = output.split(/\n/)
+  end
+  output = output.drop(first_line)
+
+  if break_lines
+    structured_output = []
+    output.each { |line|
+      structured_output << line.split(' ')
+    }
+    output = structured_output
+
+    if first_line_as_labels
+      labels = output[0]
+      output = output.drop(1)
+      labeled_output = []
+      output.each {|line|
+        labeled_output << Hash[labels.zip(line)]
+      }
+      output = labeled_output
+    end
+  end
+
+  setcode do
+    output
+  end
+end
