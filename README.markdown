@@ -34,6 +34,9 @@ Sounds cool, huh? It's Puppet 4 / future parser only, so get to work updating
 your code.
 
 #### resource facts
+Resource facts provide structured facts that described the current state of
+resources you can enumerate with the `puppet resource` command. 
+
 If you run `puppet resource mount` on a host, you'll get all the `mount`
 resources puppet can discover, not just the ones you defined in a manifest.
 
@@ -43,8 +46,13 @@ but not on EXT4 filesystems, since it's not a valid option. If you just create
 a `mount` resource that mounts `/` as XFS with `attr2` enabled it works great
 until you run it on a system that has EXT4 `/` and then you can't boot anymore.
 
-Resource facts provide structured facts that described the current state of
-resources you can enumerate with the `puppet resource` command. For example,
+For example, to set the `resource` fact to list all mounts and all users:
+
+```puppet
+factery::resource_fact { 'mount': }
+factery::resource_fact { 'user': }
+```
+
 the mounts would be listed in a structured fact something like:
 
 ```yaml
@@ -272,12 +280,14 @@ all of the nodes end up with facts like:
 
 ```
 
+
 If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
 
 ## Setup
 
 ### What factery affects
 
+* PuppetDB will cry if you're enthusiastic with resource facts
 * A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
 * This is a great place to stick any warnings.
 * Can be in list or paragraph form. 

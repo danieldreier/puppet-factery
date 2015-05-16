@@ -44,8 +44,4 @@ Facter.add(:resources) do
     resources
   end
 
-  Facter.add(:foo) do
-    "bar"
-  end
-
 end

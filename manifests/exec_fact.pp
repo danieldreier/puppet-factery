@@ -15,9 +15,9 @@ define factery::exec_fact (
   $first_line  = 0,
   $first_line_as_labels = false,
   ){
+  $fact_dir = split($::settings::factpath, ':')
   include factery::exec_facts
-  $fact_dir = $::settings::factpath.split(":")[0]
-  $fact_file = "${fact_dir}/${fact_name}.rb"
+  $fact_file = "${fact_dir[0]}/${fact_name}.rb"
 
   file { $fact_file:
     content => template('factery/exec_fact.rb.erb'),
