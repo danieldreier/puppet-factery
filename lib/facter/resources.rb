@@ -35,13 +35,24 @@ Facter.add(:resources) do
       # other types error out if a gem is missing, but we still want to gather
       # as much data as possible
       next if Puppet::Type.type(type.name).instances.count == 0
-      resources[type.name.to_s] = Puppet::Type.type(type.name).instances.map {|x| JSON.parse(x.retrieve_resource.to_hash.select {|k, v| v != nil && v != :absent}.to_json)}
+      resource_array = Puppet::Type.type(type.name).instances.map {|x| x.retrieve_resource.to_hash}
+      resource_hash = {}
+      Puppet::Type.type(type.name).instances.each {|instance|
+        resource_hash[instance.retrieve_resource.title] = instance.retrieve_resource.to_hash
+        #puts instance.retrieve_resource.to_hash.to_json
+      }
+      resources[type.name.to_s] = resource_hash
+#      resource_array.each { |resource|
+#        puts resource.to_hash.to_json
+#      }
+      #resources[type.name.to_s] = Puppet::Type.type(type.name).instances.map {|x| x.retrieve_resource.to_hash}
+
     rescue
     end
   }
 
   setcode do
-    resources
+    JSON.parse(resources.to_json)
   end
 
 end
